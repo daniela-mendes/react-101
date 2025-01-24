@@ -60,7 +60,8 @@ header > span {
 .country > span {
   font-size: 10.24px;
   font-weight: 300;
-  letter-spacing: 17%;;
+  letter-spacing: 17%;
+  text-transform: uppercase; 
 }
 
 .entry-title {
