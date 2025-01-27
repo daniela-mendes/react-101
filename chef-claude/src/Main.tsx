@@ -1,5 +1,7 @@
+import { useState } from "react"
+
 export default function Main() {
-    const ingredients = ["Chicken", "Oregano", "Tomatoes"]
+    const [ingredients, setIngredients] = useState(["Chicken", "Oregano", "Tomatoes"])
     
     const ingredientsList = ingredients.map(ing => (
         <li key={ing}>{ing}</li>
@@ -9,8 +11,7 @@ export default function Main() {
         event.preventDefault() // to avoid page refresh
         const formData: FormData = new FormData(event.currentTarget)
         const newIngredient: any = formData.get("ingredient")
-        ingredients.push(newIngredient)
-        console.log(ingredients)
+        setIngredients(prevIngs => [...prevIngs, newIngredient])
     }
 
     return (
