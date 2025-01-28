@@ -7,16 +7,16 @@ export default function Main() {
         <li key={ing}>{ing}</li>
     ))
 
-    function handleSubmit(event: any) {
-        event.preventDefault() // to avoid page refresh
-        const formData: FormData = new FormData(event.currentTarget)
+    function handleSubmit(formData: FormData) {
+        //event.preventDefault() // to avoid page refresh
+        //const formData: FormData = new FormData(event.currentTarget)
         const newIngredient: any = formData.get("ingredient")
         setIngredients(prevIngs => [...prevIngs, newIngredient])
     }
 
     return (
         <main>
-            <form onSubmit={handleSubmit}>
+            <form action={handleSubmit}>
                 <input type="text" placeholder="e.g. oregano" aria-label="add ingredient" name="ingredient" />
                 <button>+ Add ingredient</button>
             </form>
