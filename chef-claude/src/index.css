@@ -54,3 +54,47 @@ main > form > button {
   font-weight: 500;
   font-size: 14px;
 }
+
+section .ingredients-list-items {
+  font-weight: 300;
+  color: #475467;
+  line-height: 28px;
+}
+
+.get-recipe {
+  margin-top: 50px;
+  border-radius: 8px;
+  background: #F0EFEB;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.get-recipe-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  
+  h3 {
+    margin: 0;
+    line-height: 24px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 300;
+  }
+}
+
+section button {
+  background-color: #D17557;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 17px;
+  color: white;
+}
