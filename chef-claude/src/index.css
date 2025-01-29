@@ -63,6 +63,7 @@ section .ingredients-list-items {
 
 .get-recipe {
   margin-top: 50px;
+  margin-bottom: 50px;
   border-radius: 8px;
   background: #F0EFEB;
   padding: 30px;
