@@ -1,9 +1,10 @@
 import { useState } from "react"
 import IngredientsList from "./IngredientsList"
 import ClaudeRecipe from "./ClaudeRecipe"
+import { getRecipeFromMistral } from "./ai"
 
 export default function Main() {
-    const [recipeShown, setRecipeShown] = useState(false)
+    const [recipe, setRecipe] = useState<string>("")
 
     const [ingredients, setIngredients] = useState<string[]>([])
 
@@ -14,8 +15,10 @@ export default function Main() {
         setIngredients(prevIngs => [...prevIngs, newIngredient])
     }
 
-    function toggleRecipe() {
-        setRecipeShown(prevShown => !prevShown)
+    function getRecipe() {
+        getRecipeFromMistral(ingredients).then((recipe) => {
+            setRecipe(recipe ?? "Sorry, I couldn't generate a recipe.")
+        })
     }
 
     return (
@@ -24,8 +27,8 @@ export default function Main() {
                 <input type="text" placeholder="e.g. oregano" aria-label="add ingredient" name="ingredient" />
                 <button>+ Add ingredient</button>
             </form>
-            {ingredients.length > 0 && <IngredientsList toggleRecipe={toggleRecipe} ingredients={ingredients} />}
-            {recipeShown && <ClaudeRecipe />}
+            {ingredients.length > 0 && <IngredientsList getRecipe={getRecipe} ingredients={ingredients} />}
+            {recipe.length > 0 && <ClaudeRecipe recipe={recipe} />}
         </main>
     )
 }
