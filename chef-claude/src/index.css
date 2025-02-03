@@ -55,7 +55,7 @@ main > form > button {
   font-size: 14px;
 }
 
-section .ingredients-list-items {
+section .ingredients-list-items, .suggested-recipe {
   font-weight: 300;
   color: #475467;
   line-height: 28px;
@@ -98,4 +98,8 @@ section button {
   border-radius: 6px;
   padding: 9px 17px;
   color: white;
+}
+
+button:hover {
+  cursor: pointer;
 }
