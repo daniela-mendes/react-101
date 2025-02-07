@@ -20,7 +20,11 @@ export default function App() {
 	))
 
 	function rollDice() {
-		setDiceObjs(generateAllNewDice())
+		setDiceObjs(prevDice =>
+            prevDice.map(dieObj =>
+                dieObj.isHeld ? dieObj : {...dieObj, value: Math.ceil(Math.random() * 6)}
+            )
+        )
 	}
 
 	function toggleHold(diceID: number) {
