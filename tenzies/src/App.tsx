@@ -15,6 +15,10 @@ export default function App() {
 		<Dice value={num} />
 	))
 
+	function rollDice() {
+		setDiceNumbers(generateAllNewDice())
+	}
+
   	return (
 		<main>
 			<span className="title">Tenzies</span>
@@ -22,7 +26,7 @@ export default function App() {
 			<div className="grid">
 				{dice}
 			</div>
-			<button>Roll</button>
+			<button onClick={rollDice}>Roll</button>
 		</main>
 	)
 }
