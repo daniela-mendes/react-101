@@ -2,21 +2,33 @@ import { useState } from "react"
 import Dice from "./Dice"
 
 export default function App() {
-	const [diceNumbers, setDiceNumbers] = useState(generateAllNewDice())
+	const [diceObjs, setDiceObjs] = useState(generateAllNewDice())
 
 	function generateAllNewDice() {
         const diceArray = []
         for (let i = 0; i < 10; i++)
-            diceArray.push(Math.floor(Math.random() * 6) + 1);
+            diceArray.push({
+				value: Math.floor(Math.random() * 6) + 1, 
+				isHeld: false,
+				id: i
+			});
         return diceArray
     }
 
-	const dice = diceNumbers.map((num) => (
-		<Dice value={num} />
+	const dice = diceObjs.map((diceObj) => (
+		<Dice key={diceObj.id} id={diceObj.id} value={diceObj.value} isHeld={diceObj.isHeld} toggleHold={toggleHold} />
 	))
 
 	function rollDice() {
-		setDiceNumbers(generateAllNewDice())
+		setDiceObjs(generateAllNewDice())
+	}
+
+	function toggleHold(diceID: number) {
+		setDiceObjs(prevDice =>
+			prevDice.map((diceObj) => 
+				diceObj.id === diceID ? {...diceObj, isHeld: !diceObj.isHeld} : diceObj
+			)
+		)
 	}
 
   	return (
