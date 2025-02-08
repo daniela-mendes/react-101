@@ -5,7 +5,7 @@ import Confetti from 'react-confetti'
 export default function App() {
 	const { innerWidth, innerHeight } = window;
 	
-	const [diceObjs, setDiceObjs] = useState(generateAllNewDice())
+	const [diceObjs, setDiceObjs] = useState(() => generateAllNewDice())
 
     const allHeld = diceObjs.every(dieObj => dieObj.isHeld === true)
     const allTheSame = diceObjs.every(dieObj => dieObj.value === diceObjs[0].value)
