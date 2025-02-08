@@ -1,8 +1,16 @@
 import { useState } from "react"
 import Dice from "./Dice"
+import Confetti from 'react-confetti'
 
 export default function App() {
+	const { innerWidth, innerHeight } = window;
+	
 	const [diceObjs, setDiceObjs] = useState(generateAllNewDice())
+
+    const allHeld = diceObjs.every(dieObj => dieObj.isHeld === true)
+    const allTheSame = diceObjs.every(dieObj => dieObj.value === diceObjs[0].value)
+    
+    const gameWon = allHeld && allTheSame
 
 	function generateAllNewDice() {
         const diceArray = []
@@ -37,12 +45,13 @@ export default function App() {
 
   	return (
 		<main>
+			{gameWon && <Confetti width={innerWidth} height={innerHeight} />}
 			<span className="title">Tenzies</span>
 			<span className="description">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</span>
 			<div className="grid">
 				{dice}
 			</div>
-			<button onClick={rollDice}>Roll</button>
+			<button onClick={rollDice}>{gameWon ? "New Game" : "Roll"}</button>
 		</main>
 	)
 }
