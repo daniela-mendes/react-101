@@ -14,8 +14,8 @@ body {
 }
 
 main {
-  width: 320px;
-  height: 320px;
+  width: 347px;
+  height: 347px;
   background-color: #F5F5F5;
   border-radius: 10px;
 
@@ -75,6 +75,10 @@ main > button {
 
 button {
   font-family: Inter;
+}
+
+.margin-top {
+  margin-top: 10px;
 }
 
 .sr-only {
