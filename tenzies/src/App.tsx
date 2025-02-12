@@ -43,6 +43,10 @@ export default function App() {
 		)
 	}
 
+	function setNewGame() {
+        setDiceObjs(generateAllNewDice())
+    }
+
   	return (
 		<main>
 			{gameWon && <Confetti width={innerWidth} height={innerHeight} />}
@@ -51,7 +55,7 @@ export default function App() {
 			<div className="grid">
 				{dice}
 			</div>
-			<button onClick={rollDice}>{gameWon ? "New Game" : "Roll"}</button>
+			<button onClick={gameWon ? setNewGame : rollDice}>{gameWon ? "New Game" : "Roll"}</button>
 		</main>
 	)
 }
