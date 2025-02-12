@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Dice from "./Dice"
 import Confetti from 'react-confetti'
 
@@ -9,8 +9,13 @@ export default function App() {
 
     const allHeld = diceObjs.every(dieObj => dieObj.isHeld === true)
     const allTheSame = diceObjs.every(dieObj => dieObj.value === diceObjs[0].value)
-    
     const gameWon = allHeld && allTheSame
+
+	const newGameButton = useRef<HTMLButtonElement>(null)
+
+	useEffect(() => {
+		if (gameWon) newGameButton.current?.focus()
+	}, [gameWon])
 
 	function generateAllNewDice() {
         const diceArray = []
@@ -50,12 +55,18 @@ export default function App() {
   	return (
 		<main>
 			{gameWon && <Confetti width={innerWidth} height={innerHeight} />}
+			<div aria-live="polite" className="sr-only">
+				{gameWon && <p>You won! Press "New Game" to start again.</p>}
+			</div>
 			<span className="title">Tenzies</span>
 			<span className="description">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</span>
 			<div className="grid">
 				{dice}
 			</div>
-			<button onClick={gameWon ? setNewGame : rollDice}>{gameWon ? "New Game" : "Roll"}</button>
+			<button 
+				ref={newGameButton}
+				onClick={gameWon ? setNewGame : rollDice}>{gameWon ? "New Game" : "Roll"}
+				</button>
 		</main>
 	)
 }
