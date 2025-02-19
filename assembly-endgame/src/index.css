@@ -116,6 +116,13 @@ header {
     color: #1E1E1E;
     font-size: 16px;
     font-weight: 500;
+
+    &.correct-letter {
+      background-color: #10A95B;
+    }
+    &.wrong-letter {
+      background-color: #EC5D49;
+    }
   }
 }
 

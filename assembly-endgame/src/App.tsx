@@ -1,4 +1,5 @@
 import { useState } from "react"
+import clsx from "clsx";
 import { languages } from "./languages"
 
 export default function Hangman() {
@@ -24,12 +25,17 @@ export default function Hangman() {
   ))
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
-  const keyboardLetters = alphabet.split("").map(letter => (
-    <button 
+  const keyboardLetters = alphabet.split("").map(letter => {
+    const isCorrect = guessedLetters.includes(letter) && currentWord.includes(letter);
+    const isWrong = guessedLetters.includes(letter) && !currentWord.includes(letter);
+    const className = clsx(isCorrect && "correct-letter", isWrong && "wrong-letter")
+
+    return <button 
       key={letter} 
+      className={className}
       onClick={() => addGuessedLetter(letter)}
     >{letter.toUpperCase()}</button>
-  ))
+  })
 
   return (
     <main>
