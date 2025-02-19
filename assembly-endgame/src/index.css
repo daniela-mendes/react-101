@@ -1,0 +1,132 @@
+:root {
+  font-family: "Hanken Grotesk", sans-serif;
+  background-color: #262626;
+}
+
+main {
+  padding: 73px 57px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+
+  .title {
+    font-size: 20px;
+    color: #F9F4DA;
+  }
+
+  .description {
+    font-size: 14px;
+    color: #8E8E8E;
+    max-width: 350px;
+  }
+}
+
+.status {
+  border-radius: 4px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #F9F4DA;
+  font-size: 16px;
+  margin-bottom: 36px;
+  width: 100%;
+  max-width: 350px;
+
+  &.playing {
+    background-color: #7A5EA7;
+    border: 1px dashed #323232;
+    font-style: italic;
+    font-weight: 200;
+  }
+
+  &.win {
+    background-color: #10A95B;
+  }
+
+  &.loss {
+    background-color: #BA2A2A;
+  }
+}
+
+.language-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-content: center;
+  margin-bottom: 36px;
+  max-width: 350px;
+
+  span {
+    border-radius: 3px;
+    padding: 4.5px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}
+
+.guess-word {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+  margin-bottom: 64px;
+
+  span {
+    width: 40px;
+    height: 40px;
+    background-color: #323232;
+    border-bottom: 1px solid #F9F4DA;
+    text-align: center;
+    align-content: center;
+
+    color: #F9F4DA;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 36px;
+  max-width: 475px;
+
+  button {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+    text-align: center;
+    align-content: center;
+
+    background-color: #FCBA29;
+    color: #1E1E1E;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+main > button {
+  width: 228px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid #D7D7D7;
+  border-radius: 4px;
+  background-color: #11B5E5;
+  color: #1E1E1E;
+  font-size: 16px;
+  font-weight: 500;
+}
