@@ -3,6 +3,13 @@ import { languages } from "./languages"
 
 export default function Hangman() {
   
+  const [guessedLetters, setGuessedLetters] = useState<string[]>([])
+  function addGuessedLetter(letter: string) {
+    setGuessedLetters(prevLetters => 
+      prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
+    )
+  }
+
   const chips = languages.map(lang => (
     <span
       key={lang.name}
@@ -18,7 +25,10 @@ export default function Hangman() {
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
   const keyboardLetters = alphabet.split("").map(letter => (
-    <button key={letter}>{letter.toUpperCase()}</button>
+    <button 
+      key={letter} 
+      onClick={() => addGuessedLetter(letter)}
+    >{letter.toUpperCase()}</button>
   ))
 
   return (
