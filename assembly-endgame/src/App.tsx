@@ -24,6 +24,9 @@ export default function Hangman() {
     return <span key={index} className={className}>{letter.toUpperCase()}</span>
   })
 
+  const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length
+  console.log(wrongGuessCount)
+
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
   const keyboardLetters = alphabet.split("").map(letter => {
     const isCorrect = guessedLetters.includes(letter) && currentWord.includes(letter);
