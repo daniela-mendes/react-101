@@ -68,10 +68,26 @@ header {
   max-width: 350px;
 
   span {
+    position: relative;
     border-radius: 3px;
     padding: 4.5px;
     font-size: 12px;
     font-weight: bold;
+  }
+
+  span.lost::before {
+    border-radius: 2.5px;
+    content: "💀";
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    font-size: 0.85rem;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
   }
 }
 

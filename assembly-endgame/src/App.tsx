@@ -3,31 +3,33 @@ import clsx from "clsx";
 import { languages } from "./languages"
 
 export default function Hangman() {
-  
+  const [currentWord, setCurrentWord] = useState("react")
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
+
+  const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length
+
+  const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
   function addGuessedLetter(letter: string) {
     setGuessedLetters(prevLetters => 
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
     )
   }
 
-  const chips = languages.map(lang => (
-    <span
+  const chips = languages.map((lang, index) => {
+    const className = clsx( index < wrongGuessCount && "lost");
+    return <span
       key={lang.name}
+      className={className}
       style={{"backgroundColor": lang.backgroundColor, "color": lang.color}}
     >{lang.name}</span>
-  ))
+  })
 
-  const [currentWord, setCurrentWord] = useState("react")
   const guessWord = currentWord.split("").map((letter, index) => {
     const className = clsx(guessedLetters.includes(letter) && "correct-guess")
     return <span key={index} className={className}>{letter.toUpperCase()}</span>
   })
 
-  const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length
-  console.log(wrongGuessCount)
-
-  const alphabet = "abcdefghijklmnopqrstuvwxyz"
   const keyboardLetters = alphabet.split("").map(letter => {
     const isCorrect = guessedLetters.includes(letter) && currentWord.includes(letter);
     const isWrong = guessedLetters.includes(letter) && !currentWord.includes(letter);
