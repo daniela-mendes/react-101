@@ -11,6 +11,7 @@ export default function Hangman() {
   const isGameWon: boolean = currentWord.split("").every(letter => guessedLetters.includes(letter))
   const isGameLost: boolean = wrongGuessCount === languages.length - 1
   const isGameOver: boolean = isGameWon || isGameLost
+  const gameStatusClass = clsx(isGameWon && "win", isGameLost && "loss")
 
   const alphabet: string = "abcdefghijklmnopqrstuvwxyz"
 
@@ -53,9 +54,15 @@ export default function Hangman() {
         <span className="description">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</span>
       </header>
 
-      <section className="status win">
-        <span style={{"fontSize": "20px"}}>You win!</span>
-        <span>Well done! 🎉</span>
+      <section className={`status ${gameStatusClass}`}>
+        {isGameWon && <>
+          <span style={{"fontSize": "20px"}}>You win!</span>
+          <span>Well done! 🎉</span>
+        </>}
+        {isGameLost && <>
+          <span style={{"fontSize": "20px"}}>Game over!</span>
+          <span>You lose! Better start learning Assembly 😭</span>
+        </>}
       </section>
 
       <section className="language-chips">{chips}</section>
