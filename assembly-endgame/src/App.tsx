@@ -47,6 +47,26 @@ export default function Hangman() {
     >{letter.toUpperCase()}</button>
   })
 
+  function getGameStatus() {
+    if (!isGameOver) return null
+    else {
+      if (isGameWon) 
+        return (
+          <>
+            <span style={{"fontSize": "20px"}}>You win!</span>
+            <span>Well done! 🎉</span>
+          </>
+        )
+      else 
+        return (
+          <>
+            <span style={{"fontSize": "20px"}}>Game over!</span>
+            <span>You lose! Better start learning Assembly 😭</span>
+          </>
+        )
+    }
+  }
+
   return (
     <main>
       <header>
@@ -55,14 +75,7 @@ export default function Hangman() {
       </header>
 
       <section className={`status ${gameStatusClass}`}>
-        {isGameWon && <>
-          <span style={{"fontSize": "20px"}}>You win!</span>
-          <span>Well done! 🎉</span>
-        </>}
-        {isGameLost && <>
-          <span style={{"fontSize": "20px"}}>Game over!</span>
-          <span>You lose! Better start learning Assembly 😭</span>
-        </>}
+        {getGameStatus()}
       </section>
 
       <section className="language-chips">{chips}</section>
