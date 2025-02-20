@@ -6,9 +6,13 @@ export default function Hangman() {
   const [currentWord, setCurrentWord] = useState("react")
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 
-  const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length
+  const wrongGuessCount: number = guessedLetters.filter(letter => !currentWord.includes(letter)).length
 
-  const alphabet = "abcdefghijklmnopqrstuvwxyz"
+  const isGameWon: boolean = currentWord.split("").every(letter => guessedLetters.includes(letter))
+  const isGameLost: boolean = wrongGuessCount === languages.length - 1
+  const isGameOver: boolean = isGameWon || isGameLost
+
+  const alphabet: string = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter: string) {
     setGuessedLetters(prevLetters => 
@@ -60,7 +64,7 @@ export default function Hangman() {
 
       <section className="keyboard">{keyboardLetters}</section>
 
-      <button>New Game</button>
+      {isGameOver && <button>New Game</button>}
     </main>
   )
 }
