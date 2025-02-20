@@ -19,10 +19,10 @@ export default function Hangman() {
   ))
 
   const [currentWord, setCurrentWord] = useState("react")
-  const currentWordArray = currentWord.split("")
-  const guessWord = currentWordArray.map((letter, index) => (
-    <span key={index}>{letter.toUpperCase()}</span>
-  ))
+  const guessWord = currentWord.split("").map((letter, index) => {
+    const className = clsx(guessedLetters.includes(letter) && "correct-guess")
+    return <span key={index} className={className}>{letter.toUpperCase()}</span>
+  })
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
   const keyboardLetters = alphabet.split("").map(letter => {

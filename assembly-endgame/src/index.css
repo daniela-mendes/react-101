@@ -89,9 +89,13 @@ header {
     text-align: center;
     align-content: center;
 
-    color: #F9F4DA;
+    color: transparent;
     font-size: 18px;
     font-weight: 600;
+
+    &.correct-guess {
+      color: #F9F4DA;
+    }
   }
 }
 
