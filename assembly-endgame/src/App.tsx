@@ -49,6 +49,9 @@ export default function Hangman() {
     return <button 
       key={letter} 
       className={className}
+      disabled={isGameOver}
+      aria-disabled={guessedLetters.includes(letter)}
+      aria-label={`Letter ${letter}`}
       onClick={() => addGuessedLetter(letter)}
     >{letter.toUpperCase()}</button>
   })
@@ -83,13 +86,28 @@ export default function Hangman() {
         <span className="description">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</span>
       </header>
 
-      <section className={`status ${gameStatusClass}`}>
+      <section aria-live="polite" role="status" className={`status ${gameStatusClass}`}>
         {getGameStatus()}
       </section>
 
       <section className="language-chips">{chips}</section>
 
       <section className="guess-word">{guessWord}</section>
+
+      {/* Combined visually-hidden aria-live region for status updates */}
+      <section className="sr-only" aria-live="polite" role="status">
+        <p>
+          {currentWord.includes(guessedLetters[guessedLetters.length - 1]) ? 
+            `Correct! The letter ${guessedLetters[guessedLetters.length - 1]} is in the word.` : 
+            `Sorry, the letter ${guessedLetters[guessedLetters.length - 1]} is not in the word.`
+          }
+          You have {languages.length - 1} attempts left.
+        </p>
+        <p>Current word: {currentWord.split("").map(letter => 
+          guessedLetters.includes(letter) ? letter + "." : "blank.")
+          .join(" ")}
+        </p>      
+      </section>
 
       <section className="keyboard">{keyboardLetters}</section>
 
