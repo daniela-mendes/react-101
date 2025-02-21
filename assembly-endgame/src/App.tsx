@@ -1,17 +1,23 @@
 import { useState } from "react"
 import clsx from "clsx";
 import { languages } from "./languages"
+import { getFarewellText } from "./utils"
 
 export default function Hangman() {
   const [currentWord, setCurrentWord] = useState("react")
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 
   const wrongGuessCount: number = guessedLetters.filter(letter => !currentWord.includes(letter)).length
+  const isLastGuessWrong = guessedLetters.length > 0 && !currentWord.includes(guessedLetters[guessedLetters.length - 1])
 
   const isGameWon: boolean = currentWord.split("").every(letter => guessedLetters.includes(letter))
   const isGameLost: boolean = wrongGuessCount === languages.length - 1
   const isGameOver: boolean = isGameWon || isGameLost
-  const gameStatusClass = clsx(isGameWon && "win", isGameLost && "loss")
+  const gameStatusClass = clsx({
+    win: isGameWon, 
+    loss: isGameLost,
+    farewell: !isGameOver && isLastGuessWrong
+  })
 
   const alphabet: string = "abcdefghijklmnopqrstuvwxyz"
 
@@ -48,7 +54,10 @@ export default function Hangman() {
   })
 
   function getGameStatus() {
-    if (!isGameOver) return null
+    if (!isGameOver) {
+      if (isLastGuessWrong) 
+        return <span>{getFarewellText(languages[wrongGuessCount - 1].name)}</span>
+    }
     else {
       if (isGameWon) 
         return (

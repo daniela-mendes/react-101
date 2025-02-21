@@ -43,8 +43,9 @@ header {
   width: 100%;
   max-width: 350px;
 
-  &.playing {
+  &.farewell {
     background-color: #7A5EA7;
+    height: 58px;
     border: 1px dashed #323232;
     font-style: italic;
     font-weight: 200;
