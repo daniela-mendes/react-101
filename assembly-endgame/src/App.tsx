@@ -1,10 +1,10 @@
 import { useState } from "react"
 import clsx from "clsx";
 import { languages } from "./languages"
-import { getFarewellText } from "./utils"
+import { getFarewellText, chooseRandomWord } from "./utils"
 
 export default function Hangman() {
-  const [currentWord, setCurrentWord] = useState("react")
+  const [currentWord, setCurrentWord] = useState(() => chooseRandomWord())
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 
   const wrongGuessCount: number = guessedLetters.filter(letter => !currentWord.includes(letter)).length
@@ -79,6 +79,11 @@ export default function Hangman() {
     }
   }
 
+  function setNewGame() {
+    setCurrentWord(chooseRandomWord())
+    setGuessedLetters([])
+  }
+
   return (
     <main>
       <header>
@@ -111,7 +116,7 @@ export default function Hangman() {
 
       <section className="keyboard">{keyboardLetters}</section>
 
-      {isGameOver && <button>New Game</button>}
+      {isGameOver && <button onClick={setNewGame}>New Game</button>}
     </main>
   )
 }
