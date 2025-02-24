@@ -113,6 +113,10 @@ header {
     &.correct-guess {
       color: #F9F4DA;
     }
+
+    &.game-over {
+      color: #BA2A2A;
+    }
   }
 }
 

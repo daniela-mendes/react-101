@@ -37,7 +37,8 @@ export default function Hangman() {
   })
 
   const guessWord = currentWord.split("").map((letter, index) => {
-    const className = clsx(guessedLetters.includes(letter) && "correct-guess")
+    const className = clsx(guessedLetters.includes(letter) && "correct-guess",
+                           isGameLost && !guessedLetters.includes(letter) && "game-over")
     return <span key={index} className={className}>{letter.toUpperCase()}</span>
   })
 
