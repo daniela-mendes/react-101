@@ -1,11 +1,29 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import clsx from "clsx";
 import { languages } from "./languages"
 import { getFarewellText, chooseRandomWord } from "./utils"
+import Confetti from "react-confetti"
 
 export default function Hangman() {
   const [currentWord, setCurrentWord] = useState(() => chooseRandomWord())
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  })
+
+  useEffect(() => {
+    function watchWindowSize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      })
+    }
+    window.addEventListener("resize", watchWindowSize)
+		return function() {
+			window.removeEventListener("resize", watchWindowSize)
+		}
+  }, [])
 
   const wrongGuessCount: number = guessedLetters.filter(letter => !currentWord.includes(letter)).length
   const isLastGuessWrong = guessedLetters.length > 0 && !currentWord.includes(guessedLetters[guessedLetters.length - 1])
@@ -87,6 +105,7 @@ export default function Hangman() {
 
   return (
     <main>
+      {isGameWon && <Confetti width={windowSize.width} height={windowSize.height} />}
       <header>
         <span className="title">Assembly: Endgame</span>
         <span className="description">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</span>
