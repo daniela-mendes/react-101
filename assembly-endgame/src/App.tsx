@@ -37,6 +37,8 @@ export default function Hangman() {
     farewell: !isGameOver && isLastGuessWrong
   })
 
+  const remainingGuesses: number = languages.length - 1 - wrongGuessCount
+
   const alphabet: string = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter: string) {
@@ -103,9 +105,29 @@ export default function Hangman() {
     setGuessedLetters([])
   }
 
+  function SadConfetti() {
+    return (
+      <Confetti
+        width={windowSize.width} height={windowSize.height}
+        gravity={0.05} 
+        drawShape={(ctx) => {
+          const emoji = "☠️";
+          const fontSize = 25;
+
+          ctx.font = `${fontSize}px Arial`; // Set font size & type
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+
+          ctx.fillText(emoji, 0, 0); // Draw emoji at center
+        }}
+      />
+    );
+  }
+
   return (
     <main>
       {isGameWon && <Confetti width={windowSize.width} height={windowSize.height} />}
+      {isGameLost && SadConfetti()}
       <header>
         <span className="title">Assembly: Endgame</span>
         <span className="description">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</span>
@@ -117,6 +139,8 @@ export default function Hangman() {
 
       <section className="language-chips">{chips}</section>
 
+      <p>Remaining attemps: {remainingGuesses}</p>
+
       <section className="guess-word">{guessWord}</section>
 
       {/* Combined visually-hidden aria-live region for status updates */}
@@ -126,7 +150,7 @@ export default function Hangman() {
             `Correct! The letter ${guessedLetters[guessedLetters.length - 1]} is in the word.` : 
             `Sorry, the letter ${guessedLetters[guessedLetters.length - 1]} is not in the word.`
           }
-          You have {languages.length - 1} attempts left.
+          You have {remainingGuesses} attempts left.
         </p>
         <p>Current word: {currentWord.split("").map(letter => 
           guessedLetters.includes(letter) ? letter + "." : "blank.")
