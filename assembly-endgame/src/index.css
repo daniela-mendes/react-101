@@ -15,7 +15,6 @@ header {
   flex-direction: column;
   gap: 4px;
   align-items: center;
-  margin-bottom: 20px;
   text-align: center;
 
   .title {

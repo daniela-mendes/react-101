@@ -7,6 +7,7 @@ import Confetti from "react-confetti"
 export default function Hangman() {
   const [currentWord, setCurrentWord] = useState(() => chooseRandomWord())
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
+  const [farewellText, setFarewellText] = useState<string | null>(null)
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight
@@ -61,9 +62,14 @@ export default function Hangman() {
   const alphabet: string = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter: string) {
-    setGuessedLetters(prevLetters => 
-      prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
-    )
+    setGuessedLetters(prevLetters => {
+      if (prevLetters.includes(letter)) return prevLetters
+      else {
+        if (!currentWord.includes(letter)) 
+          setFarewellText(getFarewellText(languages[wrongGuessCount].name)); 
+        return [...prevLetters, letter]
+      }
+    })
   }
 
   const chips = languages.map((lang, index) => {
@@ -99,7 +105,7 @@ export default function Hangman() {
   function getGameStatus() {
     if (!isGameOver) {
       if (isLastGuessWrong) 
-        return <span>{getFarewellText(languages[wrongGuessCount - 1].name)}</span>
+        return <span>{farewellText}</span>
     }
     else {
       if (isGameWon) 
