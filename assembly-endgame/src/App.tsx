@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import clsx from "clsx";
 import { languages } from "./languages"
 import { getFarewellText, chooseRandomWord } from "./utils"
@@ -25,17 +25,36 @@ export default function Hangman() {
 		}
   }, [])
 
+  const [timer, setTimer] = useState(30)
+  const [isRunning, setIsRunning] = useState(true)
+	let interval = useRef<NodeJS.Timeout | null>(null);
+
   const wrongGuessCount: number = guessedLetters.filter(letter => !currentWord.includes(letter)).length
   const isLastGuessWrong = guessedLetters.length > 0 && !currentWord.includes(guessedLetters[guessedLetters.length - 1])
 
   const isGameWon: boolean = currentWord.split("").every(letter => guessedLetters.includes(letter))
-  const isGameLost: boolean = wrongGuessCount === languages.length - 1
+  const isGameLost: boolean = wrongGuessCount === languages.length - 1 || timer === 0
   const isGameOver: boolean = isGameWon || isGameLost
   const gameStatusClass = clsx({
     win: isGameWon, 
     loss: isGameLost,
     farewell: !isGameOver && isLastGuessWrong
   })
+
+  useEffect(() => {
+		if (isRunning && timer > 0 && !isGameOver) {
+			interval.current = setInterval(() => {
+				setTimer(prevTimer => {
+          if (timer <= 1) {
+            setIsRunning(false)
+            return 0
+          } 
+          else return prevTimer - 1
+        })
+			}, 1000)
+		}
+		return () => {clearInterval(interval.current!)}
+	}, [isRunning, timer, isGameOver])
 
   const remainingGuesses: number = languages.length - 1 - wrongGuessCount
 
@@ -103,6 +122,8 @@ export default function Hangman() {
   function setNewGame() {
     setCurrentWord(chooseRandomWord())
     setGuessedLetters([])
+    setTimer(30)
+    setIsRunning(true)
   }
 
   function SadConfetti() {
@@ -132,6 +153,8 @@ export default function Hangman() {
         <span className="title">Assembly: Endgame</span>
         <span className="description">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</span>
       </header>
+
+      <p style={{"marginBottom": "20px"}}><b>Time left:</b> {timer}s</p>
 
       <section aria-live="polite" role="status" className={`status ${gameStatusClass}`}>
         {getGameStatus()}
